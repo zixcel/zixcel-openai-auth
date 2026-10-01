@@ -1,0 +1,56 @@
+[package]
+exclude = ["*.tgz", "**/*.tgz"]
+name = "zixcel-openai-auth"
+version = "0.10.0"
+edition = "2024"
+rust-version = "1.95"
+description = "Transport-independent OpenAI account authorization core for Zixcel consumers"
+license = "Apache-2.0"
+readme = "README.md"
+publish = ["zixcel-private"]
+include = [
+  "/Cargo.toml",
+  "/Cargo.lock",
+  "/LICENSE",
+  "/NOTICE",
+  "/LICENSE-APACHE",
+  "/LICENSE-MIT",
+  "/README.md",
+  "/SECURITY.md",
+  "/repository.toml",
+  "/metadata/**",
+  "/scripts/**",
+  "/src/*.rs",
+  "!/src/test_support.rs",
+]
+
+[package.metadata.zixcel]
+boundary = "openai-account-authorization-core"
+external_actions = false
+network_client = false
+credential_values_in_wire = false
+
+[workspace]
+members = ["."]
+resolver = "3"
+
+[dependencies]
+base64 = "0.22.1"
+jsonwebtoken = "9.3.1"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sha2 = "0.10.9"
+subtle = "=2.6.1"
+thiserror = "2.0.18"
+url = "2.5.8"
+zeroize = "1.8.2"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = "deny"
+pedantic = "deny"
+dbg_macro = "deny"
+todo = "deny"
+unwrap_used = "deny"

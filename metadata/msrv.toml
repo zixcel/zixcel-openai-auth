@@ -1,0 +1,6 @@
+schema_id = "zixcel-rust-msrv-v1"
+minimum_supported_rust = "1.95.0"
+resolver = "3"
+lockfile_required = true
+dependency_sources = ["crates.io"]
+custom_build_scripts = false
