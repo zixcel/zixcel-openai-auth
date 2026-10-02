@@ -1,27 +1,15 @@
-# zixcel-openai-auth
+# zixcel-openai-auth interface reference
 
-Compose OpenAI account authorization through an injected transport and explicit validation boundaries.
+Use the [usage guide](getting-started.md) for the first steps. This reference preserves the current interface details and operational limits. Run command examples from the repository root, after preparing the exact declared dependencies and registered configuration.
 
-## What you can do
+## Boundaries
 
-- Prepare and validate the authorization ceremony.
-- Verify returned token context through caller-provided trust and time.
-
-## Current scope
-
-The caller supplies the transport, verifier and credential storage. Successful protocol validation is not evidence of a live provider deployment.
-
-Package distribution is not activated by this documentation. Use the checked-in source and the declared dependency versions; published availability must be verified separately.
-
-## Getting started
-
-Install Rust 1.95 or newer and make the declared dependencies available. Use the configured private registry when a dependency is not distributed publicly. Run from this repository:
-
-```sh
-cargo test --locked
-```
-
-## Examples and interface details
+- Production enters only through `OpenAiAuthProfile::codex_managed()`, pinning issuer, public client, endpoints, scopes, originator and loopback callback port `1455` used by official Codex.
+- Generate typed plans for Browser Authorization Code + PKCE, Device Code, refresh and revocation.
+- No HTTP client, browser launcher, callback listener, thread/session database or OS keyring implementation.
+- Tokens exist only in `SessionMaterial` and secret-bearing plans; no Debug, Clone or Serialize, and zeroization on drop.
+- No API decodes unverified JWT payloads. The concrete verifier checks RS256, `kid`, JWKS policy, signature, issuer, audience, `iat`, expiry and browser nonce.
+- No token injection route from browser/UI such as `chatgptAuthTokens` is provided.
 
 ## Usage model
 
@@ -52,11 +40,3 @@ let custody = session.into_custody_parts();
 `restore_refresh_material` verifies stored credentials with expired active ID tokens as signed identity anchors; `refresh_stored_session` promotes them to new active sessions. Logout uses `RevocationMaterial` without restoring expired ID tokens as active sessions.
 
 The crate owns no HTTP, browser, callback listener, OS keyring or persistence format. Hatter may initiate CLI/Console authentication and display loopback details; this crate owns OpenAI protocol, while Crowsi owns provider egress and persistent custody. Consumers temporarily receiving `SessionMaterial` must immediately transfer it to Crowsi custody without exposing it through web, JSON, logs, telemetry or custom persistence formats.
-
-## Documentation and source
-
-[Interface reference](docs/interface-reference.md)
-
-[Usage guide](docs/getting-started.md)
-
-[Implementation and public interfaces](src) · [Contributing](CONTRIBUTING.md) · [Security reporting](SECURITY.md) · [License](LICENSE) · [Attribution notices](NOTICE)
