@@ -5,9 +5,10 @@ version = "0.10.0"
 edition = "2024"
 rust-version = "1.95"
 description = "Transport-independent OpenAI account authorization core for Zixcel consumers"
+repository = "https://github.com/zixcel/zixcel-openai-auth"
 license = "Apache-2.0"
-readme = "README.md"
-publish = ["zixcel-private"]
+readme = "README.crate.md"
+publish = ["crates-io"]
 include = [
   "/Cargo.toml",
   "/Cargo.lock",
@@ -16,12 +17,12 @@ include = [
   "/LICENSE-APACHE",
   "/LICENSE-MIT",
   "/README.md",
+  "/README.crate.md",
   "/SECURITY.md",
   "/repository.toml",
   "/metadata/**",
   "/scripts/**",
-  "/src/*.rs",
-  "!/src/test_support.rs",
+  "/src/**",
 ]
 
 [package.metadata.zixcel]
@@ -36,7 +37,7 @@ resolver = "3"
 
 [dependencies]
 base64 = "0.22.1"
-jsonwebtoken = "9.3.1"
+jsonwebtoken = { version = "=10.4.0", default-features = false, features = ["use_pem", "aws_lc_rs"] }
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 sha2 = "0.10.9"

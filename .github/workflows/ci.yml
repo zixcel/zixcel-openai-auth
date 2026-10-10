@@ -1,0 +1,24 @@
+name: Rust library tests
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Install the minimum supported Rust toolchain
+        run: |
+          rustup toolchain install 1.95 --profile minimal --component rustfmt --component clippy
+          rustup override set 1.95
+      - name: Verify library and documentation
+        run: |
+          cargo fmt --all -- --check
+          cargo test --locked --all-features
+          cargo clippy --locked --all-targets --all-features -- -D warnings
