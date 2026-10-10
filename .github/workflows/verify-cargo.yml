@@ -1,7 +1,8 @@
 name: Verify Cargo distribution
 on:
   push:
-    branches: [main, release/crates-io-zixcel-openai-auth-0.10.0-readme]
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
@@ -23,10 +24,10 @@ jobs:
           cargo test --locked --all-features
           cargo clippy --locked --all-targets --all-features -- -D warnings
           cargo package --locked --registry crates-io
-          sha256sum target/package/zixcel-openai-auth-0.10.0.crate
+          sha256sum target/package/zixcel-openai-auth-0.10.1.crate
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: zixcel-openai-auth-reviewed-distribution
-          path: target/package/zixcel-openai-auth-0.10.0.crate
+          path: target/package/zixcel-openai-auth-0.10.1.crate
           if-no-files-found: error
           retention-days: 7
