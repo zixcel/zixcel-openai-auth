@@ -46,3 +46,14 @@ cargo clippy --locked --all-targets --all-features -- -D warnings
 [API documentation](https://docs.rs/zixcel-openai-auth) · [Source](https://github.com/zixcel/zixcel-openai-auth) · [Usage guide](https://github.com/zixcel/zixcel-openai-auth/blob/main/docs/getting-started.md)
 
 Apache-2.0. Retain the package LICENSE and NOTICE; see the source repository for security reporting and contribution guidelines.
+
+## Authorization egress policy
+
+`OpenAiAuthorizationEgress` validates managed authorization requests before an
+injected transport sends them. Only the production HTTPS origin, known methods,
+paths and content types are accepted. User information, query parameters, fragments
+and nonstandard ports are rejected. Request and response admission is limited to
+64 KiB. The adapter must also bound streaming reads and enforce a deadline.
+
+This policy performs no network access, secret storage or account operation.
+Provider-specific policy belongs to Zixcel; generic transport remains a caller port.
