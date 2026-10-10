@@ -1,3 +1,4 @@
+#![doc = include_str!("../README.crate.md")]
 //! Zixcel-owned `OpenAI` account authorization plans with explicit security ports.
 
 mod account;
