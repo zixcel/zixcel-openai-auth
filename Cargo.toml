@@ -1,4 +1,6 @@
 [package]
+categories = ["authentication", "api-bindings"]
+keywords = ["openai", "authentication", "oauth2", "api-client", "rust"]
 exclude = ["*.tgz", "**/*.tgz"]
 name = "zixcel-openai-auth"
 version = "0.10.1"
