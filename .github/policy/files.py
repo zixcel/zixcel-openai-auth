@@ -19,6 +19,8 @@ def check_tracked_paths(paths: Iterable[str], policy: RepositoryPolicy) -> None:
         if not name:
             continue
         parts = PurePosixPath(name).parts
+        if parts[0] in {"src", "scripts"} and name.endswith((".js", ".mjs", ".cjs")):
+            raise ValueError("First-party runtime/checks must use Rust or typed source: " + name)
         forbidden = parts[0] in FORBIDDEN_ROOTS
         forbidden |= "node_modules" in parts or "__pycache__" in parts
         forbidden |= name.endswith((".pyc", ".tsbuildinfo", ".tgz")) and (

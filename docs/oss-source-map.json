@@ -43,8 +43,6 @@
   ],
   "schema_definitions": [],
   "test_sources": [
-    "scripts/verify-msrv.mjs",
-    "scripts/verify-source-size.mjs",
     "src/egress/tests.rs",
     "src/jwt_header.rs",
     "src/tests/browser.rs",
