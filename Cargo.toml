@@ -23,7 +23,6 @@ include = [
   "/SECURITY.md",
   "/repository.toml",
   "/metadata/**",
-  "/scripts/**",
   "/src/**",
 ]
 

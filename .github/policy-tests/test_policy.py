@@ -23,6 +23,12 @@ class PolicyTests(unittest.TestCase):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 check_tracked_paths([path], self.policy)
 
+    def test_untyped_first_party_entrypoints_are_rejected(self) -> None:
+        for name in ("src/unchecked.js", "scripts/check.mjs", "scripts/check.cjs"):
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, "typed source"):
+                check_tracked_paths([name], self.policy)
+        check_tracked_paths(["src/lib.rs", "scripts/check.mts", "vendor/reference.js"], self.policy)
+
     def test_templates_and_source_are_accepted(self) -> None:
         check_tracked_paths([".env.example", "src/main.rs", "tests/data.json", ""], self.policy)
 
